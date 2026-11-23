@@ -6,8 +6,8 @@
 <title>Конспект на плоттере: презентация</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Golos+Text:wght@400;500;600&display=swap">
 <style>
-:root{--paper:#F4F7FB;--grid:#DCE5F0;--card:#FFFFFF;--ink:#0E1B30;--mute:#46566E;--line:#9FB2C9;--cloud:#4B3A8C;--fog:#1553B5;--dev:#06706F;--err:#B81D2F;--ok:#1F7A33;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
-:root[data-theme="dark"]{--paper:#0B121C;--grid:#16212F;--card:#152030;--ink:#F2F6FB;--mute:#B3C2D6;--line:#3A4D66;--cloud:#B5A8F0;--fog:#8CBBFA;--dev:#5EE0D3;--err:#FF8A96;--ok:#8EE09D;color-scheme:dark}
+:root{--paper:#F4F7FB;--grid:#DCE5F0;--card:#FFFFFF;--ink:#0E1B30;--mute:#46566E;--line:#9FB2C9;--cloud:#0B5FD6;--fog:#12803A;--dev:#D45A00;--acc:#0B5FD6;--err:#B81D2F;--ok:#1F7A33;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+:root[data-theme="dark"]{--paper:#0B121C;--grid:#16212F;--card:#152030;--ink:#F2F6FB;--mute:#B3C2D6;--line:#3A4D66;--cloud:#6EA8FF;--fog:#5FD98A;--dev:#FFA05C;--acc:#6EA8FF;--err:#FF8A96;--ok:#8EE09D;color-scheme:dark}
 html,body{height:100%;margin:0;overflow:hidden}
 *,*:before,*:after{box-sizing:inherit}
 body{background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:5vmin 5vmin;color:var(--ink);font:400 clamp(18px,2.6vmin,34px)/1.4 "Golos Text",system-ui,sans-serif}
@@ -42,15 +42,15 @@ h2{font:700 clamp(48px,11vmin,150px)/0.95 Caveat,"Segoe Script",cursive;margin:0
 .track i{flex:1;background:var(--line);border-radius:1vmin}
 .track i.d{background:var(--ink)}
 button{font:600 clamp(16px,2.6vmin,32px) "Golos Text",system-ui,sans-serif;color:var(--ink);background:var(--card);border:.4vmin solid var(--ink);border-radius:1.4vmin;min-width:44px;min-height:44px;padding:.6vmin 2vmin;cursor:pointer}
-button:focus-visible{outline:.6vmin solid var(--fog);outline-offset:.4vmin}
+button:focus-visible{outline:.6vmin solid var(--acc);outline-offset:.4vmin}
 .cnt{min-width:5ch;text-align:center;font-weight:600}
 .ctl2{display:flex;gap:2vmin;flex-wrap:wrap;align-items:center}
 select{font:600 clamp(16px,2.6vmin,32px) "Golos Text",system-ui,sans-serif;color:var(--ink);background:var(--card);border:.4vmin solid var(--ink);border-radius:1.4vmin;min-height:44px;padding:.6vmin 1.6vmin;max-width:100%}
-select:focus-visible{outline:.6vmin solid var(--fog);outline-offset:.4vmin}
-button.go{background:var(--fog);border-color:var(--fog);color:var(--paper)}
+select:focus-visible{outline:.6vmin solid var(--acc);outline-offset:.4vmin}
+button.go{background:var(--acc);border-color:var(--acc);color:var(--paper)}
 .sim{display:flex;flex-wrap:wrap;gap:1.4vmin}
 .chip{background:var(--card);border:.5vmin solid var(--line);border-radius:1.6vmin;padding:1.2vmin 2vmin;font-weight:600;font-size:.85em}
-.chip.on{border-color:var(--fog);background:var(--fog);color:var(--paper)}
+.chip.on{border-color:var(--acc);background:var(--acc);color:var(--paper)}
 .chip.done{border-color:var(--ok)}
 .chip.bad{border-color:var(--err);background:var(--err);color:var(--paper)}
 .stat{background:var(--card);border:.5vmin solid var(--ink);border-radius:2vmin;padding:2.5vmin 3vmin;min-height:14vmin}
@@ -75,7 +75,7 @@ var S=[
 ];
 function stage(x,k){return '<section class="sl '+x.l+'"><span class="tag">'+x.t+'</span><h2>'+x.n+'</h2><div class="io"><div class="box"><small>Вход</small><b>'+x.i+'</b></div><div class="ar">→</div><div class="box"><small>Выход</small><b>'+x.o+'</b></div></div><div class="pair"><div class="box bad"><small>Что может сломаться</small><b>'+x.e+'</b></div><div class="box good"><small>Что делаем</small><b>'+x.f+'</b></div></div></section>'}
 var h='<section class="sl"><h1>Конспект, который печатает плоттер</h1><p class="sub">IoT-система автоматизации: Telegram, ИИ, плоттер и Arduino</p><p class="sub">Зайцев И.П., Пшенников И.М., Тельманов И.Б., Быков А.Е., Ганишевский А.Э. · БИК-24-АП1 · ВВГУ</p></section>';
-h+='<section class="sl"><h2>Как устроена система</h2><div class="map"><div class="box cloud">Telegram</div><div class="ar">→</div><div class="box cloud">Claude AI</div><div class="ar">→</div><div class="box fog">Страницы и SVG</div><div class="ar">→</div><div class="box dev">Плоттер</div><div class="ar">→</div><div class="box dev">Arduino</div></div><p class="sub">Фиолетовый — облако, синий — компьютер, бирюзовый — устройства. Дальше каждый этап отдельно: вход, выход, ошибка, решение.</p></section>';
+h+='<section class="sl"><h2>Как устроена система</h2><div class="map"><div class="box cloud">Telegram</div><div class="ar">→</div><div class="box cloud">Claude AI</div><div class="ar">→</div><div class="box fog">Страницы и SVG</div><div class="ar">→</div><div class="box dev">Плоттер</div><div class="ar">→</div><div class="box dev">Arduino</div></div><p class="sub">Синий — облако, зелёный — компьютер, оранжевый — устройства. Дальше каждый этап отдельно: вход, выход, ошибка, решение.</p></section>';
 S.slice(0,4).forEach(function(x,k){h+=stage(x,k)});
 h+='<section class="sl dev"><span class="tag">устройства</span><h2>Печать идёт параллельно</h2><div class="lanes"><div class="lane"><b>Плоттер</b>рисует страницу по G-code через USB</div><div class="lane" style="--c:var(--cloud)"><b>Telegram</b>шлёт статус «страница i из N»</div></div><div class="join">затем ждём обе ветки → Arduino листает</div></section>';
 h+=stage(S[4],4);
@@ -84,7 +84,7 @@ h+='<section class="sl"><h2>Главная проблема в коде</h2><div
 h+='<section class="sl"><h2>Ограничения ресурсов</h2><div class="res"><div class="box"><b>Один плоттер</b><span>Заказы по очереди, нужна очередь</span></div><div class="box"><b>Лимит Claude</b><span>4000 токенов, длинные тексты режем</span></div><div class="box"><b>ПК включён</b><span>USB и COM живут только на нём</span></div></div></section>';
 var SM=[{n:"Telegram",e:"Пользователь не в списке доступа",f:"Отказ и список ALLOWED_USERS"},{n:"Claude AI",e:"Ошибка API или слишком длинный текст",f:"Повтор ×3, длинный текст режем на части"},{n:"Страницы",e:"Часть текста не поместилась",f:"Сверять число строк до и после"},{n:"SVG",e:"Папки Bachin Draw нет или нет прав",f:"Создавать папку при старте, команда /status"},{n:"Печать",e:"Пауза 2 секунды вместо конца печати",f:"Ждать подтверждения /next"},{n:"Arduino TURN",e:"Arduino не ответила DONE",f:"Таймаут 5 с, один повтор, затем вручную"}];
 h+='<section class="sl"><h2>Живой прогон: сломайте этап</h2><div class="ctl2"><select id="brk" aria-label="Что сломать"><option value="-1">Ничего, идеальный прогон</option>'+SM.map(function(x,k){return '<option value="'+k+'">Сломать: '+x.n+'</option>'}).join('')+'</select><button class="go" id="rn">Запустить прогон</button></div><div class="sim">'+SM.map(function(x,k){return '<div class="chip" id="c'+k+'">'+x.n+'</div>'}).join('')+'</div><div class="stat" id="sbox" aria-live="polite"><b id="stt">Готово к запуску</b><div id="std">Выберите этап, который сломается, и запустите.</div><button class="go" id="fx">Применить решение</button></div></section>';
-h+='<section class="sl"><h2>Полная схема с лентой этапов</h2><iframe src="iot-plotter-scheme.html" title="Интерактивная схема" style="flex:1;min-height:0;width:100%;border:.5vmin solid var(--ink);border-radius:2vmin;background:var(--paper)"></iframe><p class="sub" style="max-width:none"><a href="iot-plotter-scheme.html" target="_blank" rel="noopener" style="color:var(--fog)">Открыть на весь экран</a></p></section>';
+h+='<section class="sl"><h2>Полная схема с лентой этапов</h2><iframe src="iot-plotter-scheme.html" title="Интерактивная схема" style="flex:1;min-height:0;width:100%;border:.5vmin solid var(--ink);border-radius:2vmin;background:var(--paper)"></iframe><p class="sub" style="max-width:none"><a href="iot-plotter-scheme.html" target="_blank" rel="noopener" style="color:var(--acc)">Открыть на весь экран</a></p></section>';
 h+='<section class="sl"><h1>Спасибо за внимание</h1><p class="sub">Вопросы?</p></section>';
 document.getElementById("deck").innerHTML=h;
 var sl=document.querySelectorAll(".sl"),tr=document.getElementById("tr"),ct=document.getElementById("ct"),c=0;

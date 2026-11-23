@@ -6,9 +6,9 @@
 <title>Конспект на плоттере: схема IoT-системы</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Golos+Text:wght@400;500;600&display=swap">
 <style>
-:root{--paper:#EDF2F8;--grid:#D3DEEB;--card:#FFFFFF;--ink:#16243A;--mute:#55657D;--line:#B9C8DA;--cloud:#5B4B9A;--fog:#1F5FBF;--dev:#0B7F80;--err:#C9283A;--ok:#2B8A3E;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0F1722;--grid:#1B2736;--card:#17212F;--ink:#E7EEF7;--mute:#9CAEC4;--line:#33445A;--cloud:#A99BE8;--fog:#7FB0F5;--dev:#4FD1C5;--err:#FF7A88;--ok:#7DD68D;color-scheme:dark}}
-:root[data-theme="dark"]{--paper:#0F1722;--grid:#1B2736;--card:#17212F;--ink:#E7EEF7;--mute:#9CAEC4;--line:#33445A;--cloud:#A99BE8;--fog:#7FB0F5;--dev:#4FD1C5;--err:#FF7A88;--ok:#7DD68D;color-scheme:dark}
+:root{--paper:#EDF2F8;--grid:#D3DEEB;--card:#FFFFFF;--ink:#16243A;--mute:#55657D;--line:#B9C8DA;--cloud:#0B5FD6;--fog:#12803A;--dev:#C25100;--acc:#0B5FD6;--err:#C9283A;--ok:#2B8A3E;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0F1722;--grid:#1B2736;--card:#17212F;--ink:#E7EEF7;--mute:#9CAEC4;--line:#33445A;--cloud:#6EA8FF;--fog:#5FD98A;--dev:#FFA05C;--acc:#6EA8FF;--err:#FF7A88;--ok:#7DD68D;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#0F1722;--grid:#1B2736;--card:#17212F;--ink:#E7EEF7;--mute:#9CAEC4;--line:#33445A;--cloud:#6EA8FF;--fog:#5FD98A;--dev:#FFA05C;--acc:#6EA8FF;--err:#FF7A88;--ok:#7DD68D;color-scheme:dark}
 html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
 *,*:before,*:after{box-sizing:inherit}
 body{margin:0;background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;color:var(--ink);font:400 16px/1.55 "Golos Text",system-ui,sans-serif}
@@ -21,9 +21,9 @@ h2{font:700 30px/1 Caveat,"Segoe Script",cursive;margin:40px 0 12px}
 .ctl{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
 .ctl label{font-size:14px;color:var(--mute);width:100%}
 select,button{font:500 15px "Golos Text",system-ui,sans-serif;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:9px 12px;min-height:44px}
-button.go{background:var(--fog);color:#fff;border-color:var(--fog)}
+button.go{background:var(--acc);color:#fff;border-color:var(--acc)}
 :root:not([data-theme="light"]) button.go{color:#0F1722}
-button:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--fog);outline-offset:2px}
+button:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 .pages{margin-left:auto;font:700 26px Caveat,cursive}
 .flow{position:relative;margin:22px 0 0;padding-left:34px}
 .flow:before{content:"";position:absolute;left:11px;top:6px;bottom:6px;width:3px;background:repeating-linear-gradient(var(--line) 0 8px,transparent 8px 14px)}
@@ -45,7 +45,7 @@ button:focus-visible,select:focus-visible,summary:focus-visible{outline:3px soli
 .par span+span{border-color:var(--cloud)}
 .parl{font-size:13px;color:var(--mute);margin-top:6px}
 details{margin-top:8px}
-summary{cursor:pointer;font-size:14px;font-weight:500;color:var(--fog);min-height:32px;display:flex;align-items:center}
+summary{cursor:pointer;font-size:14px;font-weight:500;color:var(--acc);min-height:32px;display:flex;align-items:center}
 .dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14px;margin:6px 0 0}
 .dl dt{color:var(--mute)}.dl dd{margin:0}
 .dl .e{color:var(--err);font-weight:500}.dl .f{color:var(--ok);font-weight:500}

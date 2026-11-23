@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Конспект на плоттере: схема IoT-системы</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Golos+Text:wght@400;500;600&display=swap">
+<style>
+:root{--paper:#EDF2F8;--grid:#D3DEEB;--card:#FFFFFF;--ink:#16243A;--mute:#55657D;--line:#B9C8DA;--cloud:#5B4B9A;--fog:#1F5FBF;--dev:#0B7F80;--err:#C9283A;--ok:#2B8A3E;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0F1722;--grid:#1B2736;--card:#17212F;--ink:#E7EEF7;--mute:#9CAEC4;--line:#33445A;--cloud:#A99BE8;--fog:#7FB0F5;--dev:#4FD1C5;--err:#FF7A88;--ok:#7DD68D;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#0F1722;--grid:#1B2736;--card:#17212F;--ink:#E7EEF7;--mute:#9CAEC4;--line:#33445A;--cloud:#A99BE8;--fog:#7FB0F5;--dev:#4FD1C5;--err:#FF7A88;--ok:#7DD68D;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*:before,*:after{box-sizing:inherit}
+body{margin:0;background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;color:var(--ink);font:400 16px/1.55 "Golos Text",system-ui,sans-serif}
+main{max-width:720px;margin:0 auto;padding:28px 18px 8px}
+h1{font:700 clamp(40px,11vw,64px)/0.95 Caveat,"Segoe Script",cursive;margin:0 0 10px;letter-spacing:.5px}
+h2{font:700 30px/1 Caveat,"Segoe Script",cursive;margin:40px 0 12px}
+.lead{color:var(--mute);max-width:46ch;margin:0 0 22px}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:14px;margin-bottom:18px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.ctl{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.ctl label{font-size:14px;color:var(--mute);width:100%}
+select,button{font:500 15px "Golos Text",system-ui,sans-serif;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:9px 12px;min-height:44px}
+button.go{background:var(--fog);color:#fff;border-color:var(--fog)}
+:root:not([data-theme="light"]) button.go{color:#0F1722}
+button:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--fog);outline-offset:2px}
+.pages{margin-left:auto;font:700 26px Caveat,cursive}
+.flow{position:relative;margin:22px 0 0;padding-left:34px}
+.flow:before{content:"";position:absolute;left:11px;top:6px;bottom:6px;width:3px;background:repeating-linear-gradient(var(--line) 0 8px,transparent 8px 14px)}
+.pen{position:absolute;left:11px;top:6px;width:3px;height:0;background:var(--ink);transition:height .5s}
+.st{position:relative;background:var(--card);border:1px solid var(--line);border-left:6px solid var(--c);border-radius:10px;padding:12px 14px;margin:0 0 14px;transition:transform .25s,box-shadow .25s}
+.st:before{content:"";position:absolute;left:-31px;top:16px;width:15px;height:15px;border-radius:50%;background:var(--paper);border:3px solid var(--c)}
+.st.cloud{--c:var(--cloud)}.st.fog{--c:var(--fog)}.st.dev{--c:var(--dev)}
+.st.on{transform:translateX(6px);box-shadow:0 0 0 2px var(--c)}
+.st.on:before{background:var(--c)}
+.st.done:before{background:var(--ok);border-color:var(--ok)}
+.st.bad{border-color:var(--err);border-left-color:var(--err);box-shadow:0 0 0 2px var(--err)}
+.st.bad:before{background:var(--err);border-color:var(--err)}
+.hd{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.hd b{font-weight:600;font-size:17px}
+.tag{font-size:13px;color:var(--c);font-weight:500;white-space:nowrap}
+.st p{margin:4px 0 0;color:var(--mute);font-size:15px}
+.par{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.par span{display:block;border:1.5px dashed var(--dev);border-radius:8px;padding:8px 10px;font-size:14px;color:var(--ink)}
+.par span+span{border-color:var(--cloud)}
+.parl{font-size:13px;color:var(--mute);margin-top:6px}
+details{margin-top:8px}
+summary{cursor:pointer;font-size:14px;font-weight:500;color:var(--fog);min-height:32px;display:flex;align-items:center}
+.dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14px;margin:6px 0 0}
+.dl dt{color:var(--mute)}.dl dd{margin:0}
+.dl .e{color:var(--err);font-weight:500}.dl .f{color:var(--ok);font-weight:500}
+.loop{margin:-4px 0 14px;font:700 22px Caveat,cursive;color:var(--mute)}
+.res{display:grid;gap:10px}
+.res div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.res b{display:block;font-weight:600}
+.res span{color:var(--mute);font-size:15px}
+.bar{position:sticky;bottom:0;margin:24px -18px 0;padding:12px 18px calc(12px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:2px solid var(--ink);min-height:70px}
+.bar b{display:block}
+.bar .fix{display:none;margin-top:8px}
+.bar.err{border-top-color:var(--err)}
+.bar.err .fix{display:inline-block}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<main>
+<h1>Конспект, который печатает плоттер</h1>
+<p class="lead">IoT-система ВВГУ: текст из Telegram → ИИ → плоттер → Arduino листает страницы. Запустите прогон и сломайте любой этап, чтобы увидеть, что произойдёт.</p>
+
+<div class="legend"><span><i style="background:var(--cloud)"></i>облако</span><span><i style="background:var(--fog)"></i>компьютер (туман)</span><span><i style="background:var(--dev)"></i>устройства</span><span><i style="background:var(--err)"></i>ошибка</span></div>
+
+<div class="ctl">
+<label for="brk">Сломать этап</label>
+<select id="brk"></select>
+<button class="go" id="run">Запустить прогон</button>
+<div class="pages" id="pg">стр. 0/3</div>
+</div>
+
+<div class="flow" id="flow"><div class="pen" id="pen"></div></div>
+
+<h2>Ограничения ресурсов</h2>
+<div class="res">
+<div><b>Один плоттер</b><span>Заказы идут по очереди. Нужна очередь с одним исполнителем.</span></div>
+<div><b>Лимит ответа Claude</b><span>4000 токенов за запрос. Длинные лекции режем на части заранее.</span></div>
+<div><b>ПК должен быть включён</b><span>USB и COM-порт живут только на нём. Если ПК спит, система стоит.</span></div>
+</div>
+
+<div class="bar" id="bar" aria-live="polite"><b id="bt">Готово к запуску</b><span id="bd">Выберите этап для поломки или просто запустите.</span><br><button class="fix go" id="fix">Применить решение</button></div>
+</main>
+
+<script>
+var S=[
+{n:"Telegram-бот",l:"cloud",t:"облако",s:"Принимает .txt или текст от пользователя.",i:"файл или сообщение",o:"сырой текст",e:"Пользователь не в списке доступа",f:"Отказ и список ALLOWED_USERS в настройках",m:"Бот отклонил чужого пользователя. Решение: добавить username в ALLOWED_USERS."},
+{n:"Claude AI",l:"cloud",t:"облако",s:"Превращает текст в структурный конспект.",i:"сырой текст",o:"готовый конспект",e:"Ошибка API или текст длиннее лимита",f:"Повтор до 3 раз, длинный текст режем на части",m:"API не ответил. Решение: повторить запрос ×3, при длинном тексте разбить на части."},
+{n:"Разбиение на страницы",l:"fog",t:"ПК",s:"Строки делятся на листы по размеру тетради.",i:"конспект",o:"N страниц со строками",e:"Часть текста не поместилась",f:"Проверять, что все строки попали на лист",m:"Хвост текста потерян. Решение: сверять число строк до и после разбиения."},
+{n:"SVG в папку Bachin Draw",l:"fog",t:"ПК",s:"Страница рисуется в SVG и кладётся в папку печати.",i:"строки страницы",o:"файл .svg",e:"Папки нет или нет прав записи",f:"Создавать папку при старте, проверять путь командой /status",m:"Файл некуда записать. Решение: создать папку при запуске и проверять /status."},
+{n:"Печать страницы",l:"dev",t:"устройство",s:"Две ветки работают одновременно.",p:1,i:"файл .svg",o:"напечатанный лист",e:"Конец печати неизвестен: в коде пауза всего 2 секунды",f:"Ждать подтверждения /next или считать время по G-code",m:"Страница начала листаться во время печати. Решение: ждать /next, а не sleep(2)."},
+{n:"Arduino: TURN",l:"dev",t:"устройство",s:"Сервопривод перелистывает лист.",i:"команда TURN по COM",o:"ответ DONE",e:"Arduino не ответила DONE",f:"Читать ответ с таймаутом, один повтор, затем вручную",m:"DONE не пришёл. Решение: таймаут 5 с, повтор TURN, потом перелистать вручную."},
+{n:"Конспект готов",l:"cloud",t:"облако",s:"Бот отправляет отчёт в чат.",i:"все страницы напечатаны",o:"сообщение и файлы",e:"Сообщение не ушло",f:"Записать в лог, повторить отправку",m:"Отчёт не отправлен. Решение: повторить отправку, ошибку записать в лог."}
+];
+var flow=document.getElementById("flow"),sel=document.getElementById("brk"),pen=document.getElementById("pen");
+sel.innerHTML='<option value="-1">Ничего, идеальный прогон</option>'+S.map(function(x,k){return '<option value="'+k+'">'+x.n+'</option>'}).join("");
+S.forEach(function(x,k){
+ var a=document.createElement("article");a.className="st "+x.l;a.id="s"+k;
+ var par=x.p?'<div class="par"><span>Плоттер рисует</span><span>Статус уходит в Telegram</span></div><div class="parl">параллельно, затем ждём обе ветки</div>':"";
+ a.innerHTML='<div class="hd"><b>'+x.n+'</b><span class="tag">'+x.t+'</span></div><p>'+x.s+'</p>'+par+'<details><summary>Вход, выход, ошибка</summary><dl class="dl"><dt>Вход</dt><dd>'+x.i+'</dd><dt>Выход</dt><dd>'+x.o+'</dd><dt>Ошибка</dt><dd class="e">'+x.e+'</dd><dt>Решение</dt><dd class="f">'+x.f+'</dd></dl></details>';
+ flow.appendChild(a);
+ if(k==5){var lp=document.createElement("div");lp.className="loop";lp.textContent="↻ пока есть страницы — назад к SVG";flow.appendChild(lp)}
+});
+var bar=document.getElementById("bar"),bt=document.getElementById("bt"),bd=document.getElementById("bd"),fix=document.getElementById("fix"),pg=document.getElementById("pg"),run=document.getElementById("run");
+var busy=false,fixer=null,fixed={};
+function sleep(ms){return new Promise(function(r){setTimeout(r,ms)})}
+function el(k){return document.getElementById("s"+k)}
+function mark(k){
+ document.querySelectorAll(".st.on").forEach(function(n){n.classList.remove("on")});
+ var e=el(k);e.classList.add("on");e.scrollIntoView({block:"center"});
+ pen.style.height=(e.offsetTop+20)+"px";
+}
+fix.onclick=function(){if(fixer)fixer()};
+async function step(k,page){
+ mark(k);bt.textContent=S[k].n+(page?" · страница "+page:"");bd.textContent=S[k].s;
+ await sleep(1000);
+ if(+sel.value===k&&!fixed[k]){
+  var e=el(k);e.classList.add("bad");bar.classList.add("err");
+  bt.textContent="Сбой: "+S[k].e;bd.textContent=S[k].m;
+  await new Promise(function(r){fixer=r});fixer=null;fixed[k]=1;
+  e.classList.remove("bad");bar.classList.remove("err");
+  bt.textContent="Решение применено";bd.textContent=S[k].f;await sleep(900);
+ }
+}
+run.onclick=async function(){
+ if(busy)return;busy=true;fixed={};run.disabled=true;
+ document.querySelectorAll(".st").forEach(function(n){n.classList.remove("on","done","bad")});
+ var total=3;
+ for(var k=0;k<3;k++){await step(k);el(k).classList.add("done")}
+ for(var p=1;p<=total;p++){
+  pg.textContent="стр. "+p+"/"+total;
+  for(k=3;k<=5;k++){await step(k,p);if(p==total)el(k).classList.add("done")}
+ }
+ await step(6);el(6).classList.add("done");el(6).classList.remove("on");
+ bt.textContent="Прогон завершён";bd.textContent="Все "+total+" страницы напечатаны и перелистаны.";
+ busy=false;run.disabled=false;run.textContent="Запустить снова";
+};
+</script>
+</body>
+</html>
